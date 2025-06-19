@@ -1,7 +1,7 @@
 app = "linkedin-profile-data-scraper-app"
 
 [build]
-  builder = "heroku/buildpacks:20"
+  dockerfile = "Dockerfile"
 
 [[services]]
   internal_port = 3000
