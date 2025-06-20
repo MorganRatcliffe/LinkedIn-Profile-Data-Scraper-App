@@ -4,14 +4,12 @@ FROM node:18
 # Set working directory
 WORKDIR /app
 
-# Copy everything into container
-COPY . .
-
-# Install dependencies
+# Copy package files and install dependencies
+COPY package*.json ./
 RUN npm install
 
-# Expose port
-EXPOSE 3000
+# Copy the rest of the files
+COPY . .
 
-# Start server
+# Run the app
 CMD ["node", "server.js"]
