@@ -1,36 +1,29 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable CORS for all origins
+app.use(cors());
 app.use(express.json());
 
-app.post("/api/analyze", async (req, res) => {
-  try {
-    console.log("📦 Received POST to /api/analyze");
-    console.log("📬 Raw Body:", JSON.stringify(req.body, null, 2));
+// POST endpoint
+app.post("/api/analyze", (req, res) => {
+  console.log("🚀 REQUEST RECEIVED:", JSON.stringify(req.body, null, 2));
 
-    const { fullName, email, linkedinUrl, profileType, goal } = req.body;
-
-    if (!fullName || !email || !linkedinUrl || !profileType || !goal) {
-      console.log("❌ Missing required fields");
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    res.status(200).json({
-      message: "✅ POST received successfully",
-      received: req.body,
-    });
-  } catch (error) {
-    console.error("🔥 Error handling /api/analyze:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  res.status(200).json({
+    message: "✅ POST received successfully",
+    received: req.body,
+  });
 });
 
+// Root route (health check)
 app.get("/", (req, res) => {
   res.send("👋 Server is up and running.");
 });
 
-app.listen(PORT, () => {
+// Listen on 0.0.0.0 so Fly.io accepts external traffic
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server listening on port ${PORT}`);
 });
