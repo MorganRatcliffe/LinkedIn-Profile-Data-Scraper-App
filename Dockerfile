@@ -11,5 +11,11 @@ RUN npm install
 # Copy the rest of the files
 COPY . .
 
-# Run the app
+# List files to debug (optional, remove once verified)
+RUN ls -la
+
+# Expose the port
+EXPOSE 3000
+
+# Start the app
 CMD ["node", "server.js"]
